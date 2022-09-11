@@ -1,3 +1,10 @@
-name: Swords
+name: FireSwords
 version: 1.0
-main: Main
+main: main.FireSwords
+description: Fun swords plugin
+author: Hublot
+commands:
+  getSword:
+    usage: /getSword <Name> <Effects -> [ effect, effect... ]>
+    description: Get your magic sword
+    permission: fireswords.basic.getSwords
