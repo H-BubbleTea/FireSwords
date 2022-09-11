@@ -6,11 +6,12 @@ import java.util.ArrayList;
 
 public class DragonSword extends FireSword {
 
-    public DragonSword(String name, ArrayList<Enchantment> enchantmentArrayList) {
+    public DragonSword(String name, ArrayList<EnchantmentModel> enchantmentArrayList) {
         super(name, enchantmentArrayList);
     }
 
     @Override
-    void interactWithMobsOnGivenDamage() { }
+    void interactOnGivenDamage() {
 
+    }
 }
