@@ -1,17 +1,20 @@
 package swords;
 
-import org.bukkit.enchantments.Enchantment;
+import main.FireSwords;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import swords.swordBase.EnchantmentModel;
+import swords.swordBase.FireSword;
 
 import java.util.ArrayList;
 
 public class DragonSword extends FireSword {
 
-    public DragonSword(String name, ArrayList<EnchantmentModel> enchantmentArrayList) {
-        super(name, enchantmentArrayList);
+    public DragonSword(FireSwords fireSwords, String name, ArrayList<EnchantmentModel> enchantmentArrayList) {
+        super(fireSwords, name, enchantmentArrayList);
     }
 
     @Override
-    void interactOnGivenDamage() {
+    public void interactOnGivenDamage(EntityDamageByEntityEvent event) {
 
     }
 }

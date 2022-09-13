@@ -1,11 +1,9 @@
-package swords;
+package swords.swordBase;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import main.FireSwords;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -16,14 +14,16 @@ public abstract class FireSword {
     private ItemStack swordBody;
     private final String name;
     private final ArrayList<EnchantmentModel> enchantmentArrayList;
+    private final FireSwords fireSwords;
 
-    public FireSword(String name, ArrayList<EnchantmentModel> enchantmentArrayList) {
+    public FireSword(FireSwords fireSwords, String name, ArrayList<EnchantmentModel> enchantmentArrayList) {
+        this.fireSwords = fireSwords;
         this.name = name;
         this.enchantmentArrayList = enchantmentArrayList;
         this.createSwordBody();
     }
 
-    abstract void interactOnGivenDamage();
+    public abstract void interactOnGivenDamage(EntityDamageByEntityEvent event);
 
     private void createSwordBody() {
         ItemStack swordBody = new ItemStack(Material.DIAMOND_SWORD);

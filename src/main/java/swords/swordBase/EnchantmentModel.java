@@ -1,4 +1,4 @@
-package swords;
+package swords.swordBase;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
