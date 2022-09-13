@@ -15,6 +15,6 @@ public class DragonSword extends FireSword {
 
     @Override
     public void interactOnGivenDamage(EntityDamageByEntityEvent event) {
-
+        event.getDamager().sendMessage("hitted elo");
     }
 }

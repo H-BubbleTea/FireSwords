@@ -1,14 +1,11 @@
 package initializers;
 
-import lombok.Getter;
 import main.FireSwords;
 import org.bukkit.Server;
-import swords.listeners.FireSwordListener;
+
 
 public class ListenersManager {
 
-    @Getter
-    private FireSwordListener fireSwordListener;
 
     private final FireSwords fireSwords;
 
@@ -22,10 +19,10 @@ public class ListenersManager {
     }
 
     private void initListeners() {
-        this.fireSwordListener = new FireSwordListener(this.fireSwords);
+
     }
 
     private void registerListeners() {
-        this.server.getPluginManager().registerEvents(this.fireSwordListener, this.fireSwords);
+
     }
 }
