@@ -2,19 +2,18 @@ package swords;
 
 import main.FireSwords;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import swords.swordBase.EnchantmentModel;
 import swords.swordBase.FireSword;
+import swords.swordBase.FireSwordConfig;
 
-import java.util.ArrayList;
 
 public class DragonSword extends FireSword {
 
-    public DragonSword(FireSwords fireSwords, String name, ArrayList<EnchantmentModel> enchantmentArrayList) {
-        super(fireSwords, name, enchantmentArrayList);
-    }
+    public DragonSword(FireSwords fireSwords, FireSwordConfig fireSwordConfig) {
+        super(fireSwords, fireSwordConfig);
+   }
 
     @Override
     public void interactOnGivenDamage(EntityDamageByEntityEvent event) {
-        event.getDamager().sendMessage("hitted elo");
+        event.getDamager().sendMessage("Elo");
     }
 }

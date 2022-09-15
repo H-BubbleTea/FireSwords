@@ -1,45 +1,49 @@
 package swords.swordBase;
 
-import lombok.Data;
+import lombok.Getter;
 import main.FireSwords;
 import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
+import java.util.UUID;
 
-@Data
-public abstract class FireSword implements Listener {
+public abstract class FireSword extends ItemStack {
+    @Getter
+    private final NamespacedKey itemKey;
+    @Getter
+    private final FireSwordConfig fireSwordConfig;
+    protected final FireSwords fireSwords;
 
-    private ItemStack swordBody;
-    private final String name;
-    private final ArrayList<EnchantmentModel> enchantmentArrayList;
-    private final FireSwords fireSwords;
-
-    public FireSword(FireSwords fireSwords, String name, ArrayList<EnchantmentModel> enchantmentArrayList) {
+    public FireSword(FireSwords fireSwords, FireSwordConfig fireSwordConfig) {
+        super(Material.DIAMOND_SWORD, fireSwordConfig.amount());
+        this.itemKey = new NamespacedKey(fireSwords, UUID.randomUUID().toString());
         this.fireSwords = fireSwords;
-        this.fireSwords.getServer().getPluginManager().registerEvents(this, this.fireSwords);
-        this.name = name;
-        this.enchantmentArrayList = enchantmentArrayList;
-        this.createSwordBody();
+        this.fireSwordConfig = fireSwordConfig;
+        this.setupSwordBase();
+        this.addSwordEssentials();
+        this.fireSwords.getSwordListener().registerNewSwordListener(this);
     }
 
     public abstract void interactOnGivenDamage(EntityDamageByEntityEvent event);
 
-    @EventHandler
-    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
-        this.interactOnGivenDamage(event);
+    private void setupSwordBase() {
+        ItemMeta itemMeta = this.getItemMeta();
+        assert itemMeta != null;
+        this.setItemMeta(this.setupSwordMeta(itemMeta));
     }
 
-    private void createSwordBody() {
-        ItemStack swordBody = new ItemStack(Material.DIAMOND_SWORD);
-        this.setSwordBody(swordBody);
-        this.applyEnchants();
+    private ItemMeta setupSwordMeta(ItemMeta itemMeta) {
+        itemMeta.getPersistentDataContainer().set(this.itemKey, PersistentDataType.DOUBLE, Math.PI);
+        itemMeta.setDisplayName(this.getFireSwordConfig().name());
+        itemMeta.setLore(this.getFireSwordConfig().lore());
+        return itemMeta;
     }
 
-    private void applyEnchants() {
-        this.enchantmentArrayList.forEach(enchantment -> getSwordBody().addEnchantment(enchantment.getEnchantment(), enchantment.getLevel()));
+    private void addSwordEssentials() {
+        this.addEnchantments(this.getFireSwordConfig().enchantments());
     }
 }
