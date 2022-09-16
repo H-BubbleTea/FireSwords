@@ -1,11 +1,12 @@
 package main;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import initializers.CommandsManager;
 import initializers.ListenersManager;
+import initializers.ProtocolibPacketListenersManager;
 import lombok.Getter;
-import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import swords.swordBase.SwordListener;
 
 public final class FireSwords extends JavaPlugin {
 
@@ -15,12 +16,12 @@ public final class FireSwords extends JavaPlugin {
     @Getter
     private CommandsManager commandsManager;
     @Getter
-    private SwordListener swordListener;
-
+    private ProtocolibPacketListenersManager protocolibPacketListenersManager;
+    @Getter
+    private ProtocolManager protocolManager;
     @Override
     public void onDisable() {
         super.onDisable();
-        HandlerList.unregisterAll(this.swordListener);
     }
 
     @Override
@@ -31,8 +32,10 @@ public final class FireSwords extends JavaPlugin {
     }
 
     private void iniServerHandlers() {
-        this.swordListener = new SwordListener(fireSwords);
+        this.protocolManager = ProtocolLibrary.getProtocolManager();
+        this.protocolibPacketListenersManager = new ProtocolibPacketListenersManager(fireSwords);
         this.listenersManager = new ListenersManager(fireSwords, getServer());
         this.commandsManager = new CommandsManager(fireSwords);
+
     }
 }

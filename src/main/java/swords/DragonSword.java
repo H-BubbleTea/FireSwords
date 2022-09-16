@@ -1,9 +1,11 @@
 package swords;
 
 import main.FireSwords;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import swords.swordBase.FireSword;
 import swords.swordBase.FireSwordConfig;
+import swords.swordBase.FireSwordHitEvent;
+
+import java.util.logging.Level;
 
 
 public class DragonSword extends FireSword {
@@ -13,7 +15,7 @@ public class DragonSword extends FireSword {
    }
 
     @Override
-    public void interactOnGivenDamage(EntityDamageByEntityEvent event) {
-        event.getDamager().sendMessage("Elo");
+    public void interactOnGivenDamage(FireSwordHitEvent event) {
+        this.fireSwords.getServer().getLogger().log(Level.INFO, "ELo");
     }
 }

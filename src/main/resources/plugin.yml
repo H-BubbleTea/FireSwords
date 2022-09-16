@@ -1,8 +1,9 @@
 name: FireSwords
-version: 1.0
+version: 1.1
 main: main.FireSwords
 description: Fun swords plugin
 author: Hublot
+depend: [ ProtocolLib ]
 commands:
   getSword:
     usage: /getSword <Name> <Effects -> [ effect, effect... ]>

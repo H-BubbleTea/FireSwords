@@ -4,31 +4,27 @@ import lombok.Getter;
 import main.FireSwords;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-
-import java.util.UUID;
 
 public abstract class FireSword extends ItemStack {
     @Getter
     private final NamespacedKey itemKey;
     @Getter
     private final FireSwordConfig fireSwordConfig;
+
     protected final FireSwords fireSwords;
 
     public FireSword(FireSwords fireSwords, FireSwordConfig fireSwordConfig) {
         super(Material.DIAMOND_SWORD, fireSwordConfig.amount());
-        this.itemKey = new NamespacedKey(fireSwords, UUID.randomUUID().toString());
+        this.itemKey = new NamespacedKey(fireSwords, FireSwordKeys.FIRE_SWORD_KEY);
         this.fireSwords = fireSwords;
         this.fireSwordConfig = fireSwordConfig;
         this.setupSwordBase();
         this.addSwordEssentials();
-        this.fireSwords.getSwordListener().registerNewSwordListener(this);
     }
 
-    public abstract void interactOnGivenDamage(EntityDamageByEntityEvent event);
+    public abstract void interactOnGivenDamage(FireSwordHitEvent event);
 
     private void setupSwordBase() {
         ItemMeta itemMeta = this.getItemMeta();
@@ -37,7 +33,7 @@ public abstract class FireSword extends ItemStack {
     }
 
     private ItemMeta setupSwordMeta(ItemMeta itemMeta) {
-        itemMeta.getPersistentDataContainer().set(this.itemKey, PersistentDataType.DOUBLE, Math.PI);
+        itemMeta.getPersistentDataContainer().set(this.itemKey, FireSwordKeys.FIRE_SWORD_DATA_TYPE, FireSwordKeys.FIRE_SWORD_SECRET_VALUE);
         itemMeta.setDisplayName(this.getFireSwordConfig().name());
         itemMeta.setLore(this.getFireSwordConfig().lore());
         return itemMeta;
