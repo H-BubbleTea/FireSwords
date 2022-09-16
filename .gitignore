@@ -41,7 +41,6 @@ build/
 .settings/
 
 # ignore other java files
-bin/
 
 # Compiled class file
 *.class
